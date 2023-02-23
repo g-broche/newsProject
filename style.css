@@ -1,0 +1,255 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(234, 241, 245);
+}
+
+body>header {
+    padding: 20px 50px;
+    height: 250px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgb(0, 0, 0);
+    background: radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(3, 1, 31, 1) 9%, rgba(8, 4, 73, 1) 18%, rgba(5, 4, 73, 1) 21%, rgba(9, 74, 121, 1) 42%, rgba(1, 204, 247, 1) 75%, rgba(14, 173, 217, 1) 76%, rgba(0, 75, 119, 1) 77%, rgba(0, 67, 126, 1) 79%, rgba(0, 9, 62, 1) 81%, rgba(86, 179, 205, 1) 83%, rgba(95, 173, 195, 1) 100%);
+    color: white;
+}
+
+#languageWrapper {
+    top: 20px;
+    right: 50px;
+    position: absolute;
+    display: flex;
+    gap: 10px;
+}
+
+#languageWrapper button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#languageWrapper button img {
+    width: 35px;
+    vertical-align: middle;
+}
+
+h1 {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 3em;
+}
+
+main {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#userQuery {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+#userQuery select {
+    background-color: white;
+    border: none;
+    padding: 2px 3px;
+    border: 2px rgb(152, 198, 219) outset;
+}
+
+#userQuery div:last-child {
+    width: 200px;
+    position: relative;
+    background-color: white;
+
+}
+
+#userQuery div:last-child input {
+    width: 100%;
+    padding: 3px 30px 3px 3px;
+    display: block;
+    border-color: rgb(152, 198, 219);
+}
+
+#userQuery div:last-child button {
+    z-index: 1;
+    height: 100%;
+    width: 25px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: transparent;
+    border: none;
+}
+
+.newsWrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.newsWrapper h2 {
+    padding: 20px 0px 15px;
+    text-align: center;
+}
+
+.newsWrapper>section:first-child {
+
+    width: 70%;
+}
+
+.newsWrapper>section:last-child {
+    width: 25%;
+}
+
+#headlineGrid {
+
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
+    row-gap: 25px;
+    column-gap: 25px;
+}
+
+#articleGrid {
+
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr;
+    grid-auto-rows: 1fr;
+    row-gap: 25px;
+
+}
+
+article {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    background-color: rgb(255, 255, 255);
+
+}
+
+#headlineGrid article {
+    box-shadow: 5px 5px 8px rgb(101, 129, 182);
+}
+
+#articleGrid article {
+    box-shadow: 5px 5px 8px rgb(31, 2, 7);
+}
+
+article header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+article header span:first-child {
+    font-style: italic;
+}
+
+article footer {
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.imgContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 30%;
+    text-align: center;
+
+}
+
+.imgContainer img {
+    object-fit: cover;
+    max-height: 100%;
+    width: 100%;
+}
+
+article h4 {
+    height: 20%;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+@media only screen and (max-width:1200px) {}
+
+#headlineGrid {
+    column-gap: 15px;
+}
+
+@media only screen and (max-width:900px) {
+    .newsWrapper>section:first-child {
+
+        width: 60%;
+    }
+
+    .newsWrapper>section:last-child {
+        width: 35%;
+    }
+
+    #headlineGrid {
+        display: grid;
+        justify-items: center;
+        grid-template-columns: 1fr;
+    }
+}
+
+@media only screen and (max-width:700px) {
+    main {
+        padding: 20px 5px;
+    }
+
+    .newsWrapper {
+        gap: 20px;
+    }
+
+    .newsWrapper>section:first-child {
+
+        width: 100%;
+    }
+
+    .newsWrapper>section:last-child {
+        width: 100%;
+    }
+
+    #headlineGrid {
+
+        grid-template-columns: 1fr 1fr;
+        row-gap: 15px;
+        column-gap: 5px;
+    }
+
+    #articleGrid {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 15px;
+        column-gap: 5px;
+    }
+
+    #headlineGrid article {
+        box-shadow: 0px 5px 6px rgb(101, 129, 182);
+    }
+
+    #articleGrid article {
+        box-shadow: 0px 5px 6px rgb(31, 2, 7);
+    }
+}

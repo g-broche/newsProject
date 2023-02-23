@@ -6,11 +6,62 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
     <title>Home</title>
 </head>
 
 <body>
+    <header>
+        <div id="languageWrapper">
+            <button><img src="/Resources/flagFR.png"></button>
+            <button><img src="/Resources/flagUK.png"></button>
+        </div>
+        <h1>Derp News</h1>
+        <nav>
 
+        </nav>
+    </header>
+    <main>
+        <section id="userQuery">
+            <div>
+                <label for="country">Pays:</label>
+                <select id="country" name="country" autocomplete="off">
+                    <option value="fr" selected>France</option>
+                    <option value="gb">Royaume-Uni</option>
+                    <option value="us">Etats-Unis</option>
+                </select>
+            </div>
+            <div>
+                <label for="category">Catégorie:</label>
+                <select id="category" name="category" autocomplete="off">
+                    <option value="" selected>Toute l'actualité</option>
+                    <option value="business">Business</option>
+                    <option value="entertainment">Divertissement</option>
+                    <option value="general">Géneral</option>
+                    <option value="health">Santé</option>
+                    <option value="science">Science</option>
+                    <option value="sports">Sports</option>
+                    <option value="technology">Téchnologie</option>
+                </select>
+            </div>
+            <div>
+                <input id="searchField" type="search" placeholder="rechercher"><button id="searchButton">🔍</button>
+            </div>
+        </section>
+        <div class="newsWrapper">
+            <section>
+                <h2 id="headlineTitle">Dernières actualités</h2>
+                <div id="headlineGrid"></div>
+            </section>
+            <section>
+                <h2 id="articleTitle">Guerre en Ukraine</h2>
+                <div id="articleGrid"></div>
+            </section>
+        </div>
+    </main>
 </body>
 <script src="script.js"></script>
 
