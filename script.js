@@ -2,14 +2,15 @@
 
 /* ***** GLOBAL OBJECTS AND VARIABLES ***** */
 
-const HeadlineGrid = document.getElementById("headlineGrid");
+const HeadlineGrid = document.getElementById("headlineGrid"); //main interactive news display
 const HeadlineTitle = document.getElementById("headlineTitle");
-const ArticleGrid = document.getElementById("articleGrid");
-const articleTitle = document.getElementById("articleTitle");
+const ArticleGrid = document.getElementById("articleGrid"); //area dedicated to a specific theme (Ukraine currently)
+const articleTitle = document.getElementById("articleGridTitle");
 
+// gets the text of the category selected by the user for display purposes when fetching articles
 let currentCategory = "";
 
-
+//Query object containing the method to construct a request url by concatenating some of the object's properties
 const Query = {
     construct() {
         let request = `${this.APIUrl}${this.endpoint}?`;
@@ -26,6 +27,7 @@ const Query = {
     }
 }
 
+// QueryHeadline will be the object dedicating to fetch requests using the "top-headline" endpoint
 const QueryHeadlines = Object.create(Query);
 Object.assign(QueryHeadlines, {
     request: "",
@@ -41,6 +43,7 @@ Object.assign(QueryHeadlines, {
     }
 });
 
+//this function returns a date object with 7 days substracted from the date use for argument
 function getEarlierDate(date, interval = 7) {
     let earlierDate = new Date(date);
     earlierDate.setDate(earlierDate.getDate() - interval);
@@ -50,6 +53,7 @@ function getEarlierDate(date, interval = 7) {
 let currentDate = new Date();
 let earlierDate = getEarlierDate(currentDate);
 
+// QueryEverything will be the object dedicating to fetch requests using the "everything" endpoint, will look for article from the 7 last days
 const QueryEverything = Object.create(Query);
 Object.assign(QueryEverything, {
     request: "",
@@ -66,9 +70,9 @@ Object.assign(QueryEverything, {
     }
 });
 
-
-
 /* ***** INPUTS AND EVENTS ***** */
+
+// select element used by the user to specify which of the available countries' medias the user wants to check, will override search by language
 const countrySelector = document.getElementById("country");
 
 countrySelector.addEventListener("change", () => {
@@ -77,6 +81,7 @@ countrySelector.addEventListener("change", () => {
     updateHeadlines()
 });
 
+// select element used by the user to specify which of the available categories the user wants to check
 const categorySelector = document.getElementById("category");
 
 categorySelector.addEventListener("change", () => {
@@ -85,6 +90,7 @@ categorySelector.addEventListener("change", () => {
     updateHeadlines()
 });
 
+// elements used by the user to perform a specific search
 const searchField = document.getElementById("searchField");
 const searchButton = document.getElementById("searchButton");
 
@@ -102,6 +108,7 @@ searchButton.addEventListener("click", () => {
 
 });
 
+// buttons using country flag used to perform a request based on a specific language, will override search by country.
 const frButton = document.querySelector("#languageWrapper button:first-child");
 const enButton = document.querySelector("#languageWrapper button:last-child");
 
@@ -124,6 +131,7 @@ enButton.addEventListener("click", () => {
 
 /* ***** FUNCTIONS ***** */
 
+//fetching API for headline news and displaying the result
 async function updateHeadlines() {
     HeadlineGrid.textContent = "";
     QueryHeadlines.construct();
@@ -137,6 +145,8 @@ async function updateHeadlines() {
     }
     QueryHeadlines.filter.q = ""
 };
+
+//fetching API for non headline news and displaying the result
 async function updateNonHeadlines() {
     ArticleGrid.textContent = "";
     QueryEverything.construct();
@@ -149,14 +159,12 @@ async function updateNonHeadlines() {
     }
 };
 
+//adds a 0 in front of a date element (example: minutes) in case the element is between 0 and 9 and returns a corresponding string
 function formatDateElements(dateElement) {
     return (dateElement.length == 1 ? `0${dateElement}` : dateElement);
 }
 
-function extractAuthor(article) {
-    return (article.author != null ? article.author : "auteur non indiqué")
-}
-
+//extract date elements of a date object to create a formated string, type of formating depends on a boolean argument
 function extractDate(dateString, isSearchFormat = false) {
     let artDate = new Date(dateString);
     if (isSearchFormat) {
@@ -166,6 +174,12 @@ function extractDate(dateString, isSearchFormat = false) {
     }
 }
 
+//takes an article and look for its author, if there is no specified author it will return a string indicating it, in other cases it will return the specified author
+function extractAuthor(article) {
+    return (article.author != null ? article.author : "auteur non indiqué")
+}
+
+//creates and returns an article tag and all its children based on a article object to display
 function createArticle(article) {
     let newArticleDiv = document.createElement("article");
     let newArticleHeader = document.createElement("header");
@@ -208,26 +222,33 @@ function createArticle(article) {
     return newArticleDiv;
 }
 
+//Take an array of articles and displays them in the grid section dedicated to specific news
 function displayAllArticles(articles) {
     articles.forEach(article => {
         ArticleGrid.appendChild(createArticle(article));
     });
 }
 
+//Take an array of articles and displays them in the grid section dedicated to headlines and user search requests
 function displayAllHeadlines(articles) {
     articles.forEach(article => {
         HeadlineGrid.appendChild(createArticle(article));
     });
 }
+
+//change the title of the headline section to indicate what overall fetch request was for the currently displayed articles
 function changeHeadlineTitle(articleArray) {
-    if (articleArray.length > 0) {
-        HeadlineTitle.textContent = `Les ${articleArray.length} dernières actualités${getCountryMsg()}${getLanguageMsg()}${getCategoryMsg()}${getSearchMsg()}`
-    } else {
+    if (articleArray.length > 1) {
+        HeadlineTitle.textContent = `Les ${articleArray.length} dernières actualitées${getCountryMsg()}${getLanguageMsg()}${getCategoryMsg()}${getSearchMsg()}`
+    } else if (articleArray.length == 1) {
+        HeadlineTitle.textContent = `La dernière actualitée${getCountryMsg()}${getLanguageMsg()}${getCategoryMsg()}${getSearchMsg()}`
+    }
+    else {
         HeadlineTitle.textContent = `Aucune actualitée trouvée${getCountryMsg()}${getLanguageMsg()}${getCategoryMsg()}${getSearchMsg()}`
     }
-
 }
 
+//returns a string based on the country used for the fetching request
 function getCountryMsg() {
     switch (QueryHeadlines.filter.country) {
 
@@ -245,6 +266,7 @@ function getCountryMsg() {
     }
 }
 
+//returns a string based on the language used for the fetching request
 function getLanguageMsg() {
     switch (QueryHeadlines.filter.language) {
         case "fr":
@@ -258,12 +280,14 @@ function getLanguageMsg() {
     }
 }
 
+//returns a string based on the category that was used for the fetching request
 function getCategoryMsg() {
     return (QueryHeadlines.filter.category == "" ? " toutes catégories confondues" : ` dans la catégorie ${currentCategory}`)
 }
 
+//returns a string based on the search request that was used for the fetching request
 function getSearchMsg() {
-    return (QueryHeadlines.filter.q == "" ? "" : ` pour les termes "${QueryHeadlines.filter.q}"`)
+    return (QueryHeadlines.filter.q == "" ? "" : ` pour la recherche "${QueryHeadlines.filter.q}"`)
 }
 /* ***** INITIALIZATION ***** */
 

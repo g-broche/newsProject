@@ -56,6 +56,7 @@ main {
 
 #userQuery {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     align-items: center;
 }
@@ -100,12 +101,11 @@ main {
 }
 
 .newsWrapper h2 {
-    padding: 20px 0px 15px;
-    text-align: center;
+    min-height: 60px;
+    margin: 10px 0px 5px;
 }
 
 .newsWrapper>section:first-child {
-
     width: 70%;
 }
 
@@ -130,7 +130,10 @@ main {
     grid-template-columns: 1fr;
     grid-auto-rows: 1fr;
     row-gap: 25px;
+}
 
+#articleGridTitle {
+    text-align: center;
 }
 
 article {
@@ -154,12 +157,19 @@ article {
 
 article header {
     width: 100%;
+    height: 15%;
     display: flex;
     justify-content: space-between;
 }
 
 article header span:first-child {
+    overflow: hidden;
     font-style: italic;
+    max-width: 45%;
+}
+
+article header span:last-child {
+    font-size: .9em;
 }
 
 article footer {
@@ -167,6 +177,10 @@ article footer {
     margin-top: auto;
     display: flex;
     justify-content: space-between;
+}
+
+article footer {
+    text-decoration: underline;
 }
 
 .imgContainer {
@@ -191,30 +205,36 @@ article h4 {
     text-align: center;
 }
 
-@media only screen and (max-width:1200px) {}
+@media only screen and (max-width:1400px) {
+    #languageWrapper {
+        right: 30px;
+    }
 
-#headlineGrid {
-    column-gap: 15px;
-}
-
-@media only screen and (max-width:900px) {
     .newsWrapper>section:first-child {
-
-        width: 60%;
+        width: 70%;
     }
 
     .newsWrapper>section:last-child {
-        width: 35%;
+        width: 27%;
     }
 
     #headlineGrid {
-        display: grid;
-        justify-items: center;
-        grid-template-columns: 1fr;
+        row-gap: 15px;
+        column-gap: 15px;
     }
 }
 
-@media only screen and (max-width:700px) {
+
+
+@media only screen and (max-width:900px) {
+    body {
+        font-size: 90%;
+    }
+
+    #languageWrapper {
+        right: 20px;
+    }
+
     main {
         padding: 20px 5px;
     }
@@ -230,19 +250,14 @@ article h4 {
 
     .newsWrapper>section:last-child {
         width: 100%;
+        border-top: 1px solid black;
     }
 
-    #headlineGrid {
-
-        grid-template-columns: 1fr 1fr;
-        row-gap: 15px;
-        column-gap: 5px;
-    }
-
+    #headlineGrid,
     #articleGrid {
         grid-template-columns: 1fr 1fr;
         row-gap: 15px;
-        column-gap: 5px;
+        column-gap: 15px;
     }
 
     #headlineGrid article {
@@ -251,5 +266,74 @@ article h4 {
 
     #articleGrid article {
         box-shadow: 0px 5px 6px rgb(31, 2, 7);
+    }
+}
+
+@media only screen and (max-width:600px) {
+    #languageWrapper {
+        right: 15px;
+    }
+
+    #userQuery div:first-child {
+        order: 1
+    }
+
+    #userQuery div:nth-child(2) {
+        order: 3
+    }
+
+    #userQuery div:last-child {
+        margin-left: auto;
+        order: 2
+    }
+
+
+    .newsWrapper>section:first-child {
+
+        width: 100%;
+    }
+
+    .newsWrapper>section:last-child {
+        width: 100%;
+    }
+
+    #headlineGrid {
+
+        grid-template-columns: 1fr;
+    }
+
+    #articleGrid {
+        grid-template-columns: 1fr;
+    }
+
+    article header,
+    article h4,
+    article p {
+        height: fit-content
+    }
+}
+
+
+@media only screen and (max-width:400px) {
+    #languageWrapper {
+        right: 5px;
+    }
+
+    #userQuery {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #userQuery div:first-child {
+        order: initial
+    }
+
+    #userQuery div:nth-child(2) {
+        order: initial
+    }
+
+    #userQuery div:last-child {
+        margin-left: 0;
+        order: initial
     }
 }
