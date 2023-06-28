@@ -66,7 +66,7 @@ Object.assign(QueryEverything, {
         q: "Ukraine",
         from: extractDate(earlierDate, true),
         to: extractDate(currentDate, true),
-        pageSize: 10
+        pageSize: 5
     }
 });
 
@@ -141,7 +141,7 @@ async function updateHeadlines() {
         changeHeadlineTitle(dataHeadlines.articles);
         displayAllHeadlines(dataHeadlines.articles);
     } catch {
-        HeadlineGrid.innerHTML = "<span>News API could not be reached</span>"
+        HeadlineGrid.innerHTML = "<span>News API n'a pas pu être contacté ou le quota quotidien de la clé a été dépassé</span>"
     }
     QueryHeadlines.filter.q = ""
 };
@@ -155,7 +155,7 @@ async function updateNonHeadlines() {
         let dataEverything = await response.json();
         displayAllArticles(dataEverything.articles);
     } catch {
-        ArticleGrid.innerHTML = "<span>News API could not be reached</span>"
+        ArticleGrid.innerHTML = "<span>News API n'a pas pu être contacté ou le quota quotidien de la clé a été dépassé</span>"
     }
 };
 
@@ -204,8 +204,15 @@ function createArticle(article) {
 
 
     let newArticleImage = document.createElement("img");
-    newArticleImage.src = article.urlToImage;
-    newArticleImage.alt = "aucune image associée";
+    if (article.urlToImage != null) {
+        newArticleImage.src = article.urlToImage;
+        newArticleImage.alt = (extractAuthor(article) !== "auteur non indiqué" ? "photo issue de " + extractAuthor(article) : "photo non sourcée")
+        imageContainer.appendChild(newArticleImage);
+    } else {
+        newArticleImage.src = null;
+        newArticleImage.alt = "aucune photo n'a été fournie à l'API pour cet article"
+        imageContainer.appendChild(newArticleImage);
+    }
 
     let newArticleSource = document.createElement("span");
     newArticleSource.textContent = article.source.name;
@@ -215,10 +222,10 @@ function createArticle(article) {
     newArticleUrl.textContent = "consulter l'article"
 
     newArticleHeader.append(newArticleAuthor, newArticleDate)
-    imageContainer.appendChild(newArticleImage);
-    newArticleFooter.append(newArticleUrl, newArticleSource)
 
+    newArticleFooter.append(newArticleUrl, newArticleSource)
     newArticleDiv.append(newArticleHeader, imageContainer, newArticleTitle, newArticleDescription, newArticleFooter)
+
     return newArticleDiv;
 }
 

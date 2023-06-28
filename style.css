@@ -142,7 +142,7 @@ article {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 25px;
+    gap: 15px;
     background-color: rgb(255, 255, 255);
 
 }
@@ -157,7 +157,8 @@ article {
 
 article header {
     width: 100%;
-    height: 15%;
+    max-height: 10%;
+    overflow: hidden;
     display: flex;
     justify-content: space-between;
 }
@@ -188,9 +189,17 @@ article footer {
     justify-content: center;
     align-items: center;
     width: 80%;
-    height: 30%;
-    text-align: center;
 
+    text-align: center;
+}
+
+#headlineGrid .imgContainer {
+    height: 200px;
+}
+
+#articleGrid .imgContainer {
+    min-height: 30%;
+    max-height: 200px;
 }
 
 .imgContainer img {
@@ -200,7 +209,6 @@ article footer {
 }
 
 article h4 {
-    height: 20%;
     font-size: 1.2em;
     text-align: center;
 }
